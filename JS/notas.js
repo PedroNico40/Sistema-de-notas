@@ -1,21 +1,19 @@
 
- // FUNÇÃO PARA CALCULAR A MÉDIA
+// Função para calcular a média das notas.
 function calcularMedia(nota1, nota2) {
-    return (nota1 + nota2) / 2;
-}
+    return (nota1 + nota2) / 2;}
 
-// FUNÇÃO PARA VERIFICAR A SITUAÇÃO
+// Função para verificar a situação acadêmica.
 function verificarSituacao(media) {
     if (media >= 7) {
-    return "Aprovado";
-    } else if (media >= 5) {
-    return "Recuperação";
+        return "APROVADO";
+    } else if (media >= 4) {
+        return "RECUPERAÇÃO";
     } else {
-    return "Reprovado";
-    }
-}
+        return "REPROVADO";
+    }}
 
-// FUNÇÃO PARA VALIDAR UMA NOTA
+// Função para validar as notas de 0 a 10.
 function validarNota(nota) {
     if (typeof nota !== "number" || !Number.isFinite(nota)) {
     return false;
@@ -24,40 +22,47 @@ function validarNota(nota) {
     if (nota < 0 || nota > 10) {
     return false;
     }
- return true;
-}
 
-// ARRAY COM OS ALUNOS
+    return true;}
+
+// Função para processar e exibir os dados do aluno.
+function processarAluno(aluno) {
+    console.log("Aluno:", aluno.nome);
+ console.log("Nota 1:", aluno.nota1);
+    console.log("Nota 2:", aluno.nota2);
+
+    if (!validarNota(aluno.nota1) || !validarNota(aluno.nota2)) {
+     console.log("Situação: ENTRADA_INVALIDA");
+    console.log("------------------------");
+        return; }
+
+    let media = calcularMedia(aluno.nota1, aluno.nota2);
+    let situacao = verificarSituacao(media);
+
+ console.log("Média:", media.toFixed(2));
+console.log("Situação:", situacao);
+    console.log("------------------------");}
+
+// Lista de alunos cadastrados.
 let alunos = [
-{ nome: "Pedro", nota1: 9, nota2: 7 },
+ { nome: "Pedro", nota1: 9, nota2: 7 },
     { nome: "Lucas", nota1: 4, nota2: 6 },
-    { nome: "Maria", nota1: 8, nota2: 10 },
+ { nome: "Maria", nota1: 8, nota2: 10 },
     { nome: "João", nota1: 3, nota2: 5 },
     { nome: "Carlos", nota1: 12, nota2: 8 }
 ];
 
-// EXIBINDO OS RESULTADOS
-console.log("=== SISTEMA DE NOTAS ===");
+// Executa o sistema e percorre a lista de alunos.
+if (require.main === module) {
+ console.log("=== SISTEMA DE NOTAS ACADÊMICAS ===");
 
-for (let i = 0; i < alunos.length; i++) {
+    for (let i = 0; i < alunos.length; i++) {
+     processarAluno(alunos[i]);
+    }}
 
-    let aluno = alunos[i];
-    // VERIFICANDO SE AS DUAS NOTAS SÃO VÁLIDAS
-    if (!validarNota(aluno.nota1) || !validarNota(aluno.nota2)) {
-        console.log("Aluno:", aluno.nome);
-        console.log("Erro: nota inválida!");
-        console.log("------------------------");
-        continue;
-    }
-    // CALCULANDO A MÉDIA
-    let media = calcularMedia(aluno.nota1, aluno.nota2);
-    
-    // VERIFICANDO A SITUAÇÃO
-    let situacao = verificarSituacao(media);
-
-    // EXIBINDO OS RESULTADOS
-    console.log("Aluno:", aluno.nome);
-    console.log("Média:", media);
-    console.log("Situação:", situacao);
-    console.log("------------------------");
-}
+// Exporta as funções para o arquivo de testes.
+module.exports = {
+calcularMedia,
+verificarSituacao,
+validarNota,
+processarAluno};
